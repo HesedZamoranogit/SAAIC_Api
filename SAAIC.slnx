@@ -2,5 +2,6 @@
   <Project Path="SAAIC.Application/SAAIC.Application.csproj" />
   <Project Path="SAAIC.Domain/SAAIC.Domain.csproj" />
   <Project Path="SAAIC.Infrastructure/SAAIC.Infrastructure.csproj" />
+  <Project Path="SAAIC.Tests/SAAIC.Tests.csproj" />
   <Project Path="SAAIC.Web/SAAIC.Web.csproj" />
 </Solution>

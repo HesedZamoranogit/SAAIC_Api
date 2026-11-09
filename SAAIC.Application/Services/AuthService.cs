@@ -29,9 +29,19 @@ public class AuthService : IAuthService
         LoginRequestDto request,
         CancellationToken cancellationToken = default)
     {
-        if (string.IsNullOrWhiteSpace(request.IdInstitucional) || string.IsNullOrWhiteSpace(request.Password))
+        if (string.IsNullOrWhiteSpace(request.IdInstitucional) && string.IsNullOrWhiteSpace(request.Password))
         {
             throw new DomainException("Debe ingresar el ID Institucional y la contraseña.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.IdInstitucional))
+        {
+            throw new DomainException("El ID Institucional es obligatorio.");
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Password))
+        {
+            throw new DomainException("La contraseña es obligatoria.");
         }
 
         var idInstitucional = request.IdInstitucional.Trim();
@@ -40,7 +50,7 @@ public class AuthService : IAuthService
 
         if (user == null || !user.Active)
         {
-            throw new DomainException("Credenciales inválidas o usuario inactivo.");
+            throw new DomainException("Credenciales inválidas.");
         }
 
         var passwordValid = await _userManager.CheckPasswordAsync(user, request.Password);

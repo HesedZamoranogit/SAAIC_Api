@@ -102,6 +102,7 @@ public class Reserva : BaseEntity
     {
         ArgumentNullException.ThrowIfNull(espacio);
         ValidarDatosBasicos(idUsuario, responsableEvento, descripcion);
+        ValidarFecha(fecha);
         espacio.ValidarReglasDeEspacio(maximoAsistentes, horaInicio, horaFin);
 
         var reserva = new Reserva
@@ -510,5 +511,13 @@ public class Reserva : BaseEntity
 
         if (string.IsNullOrWhiteSpace(descripcion))
             throw new DomainException("La descripción del evento es obligatoria.");
+    }
+
+    private static void ValidarFecha(DateOnly fecha)
+    {
+        if (fecha == default || fecha < DateOnly.FromDateTime(DateTime.Today))
+        {
+            throw new DomainException("No se pueden realizar reservaciones en fechas pasadas.");
+        }
     }
 }

@@ -36,6 +36,11 @@ public class ReservaService : IReservaService
         string idUsuarioActual,
         CancellationToken cancellationToken = default)
     {
+        if (request.IdEspacio <= 0)
+        {
+            throw new DomainException("El aula o espacio a reservar es obligatorio.");
+        }
+
         await _unitOfWork.BeginTransactionAsync(IsolationLevel.ReadCommitted, cancellationToken);
 
         try
